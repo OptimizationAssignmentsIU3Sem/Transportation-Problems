@@ -39,6 +39,8 @@ def vogel(costs, demand, supply):
     """
     demand = [[i, dem] for i, dem in enumerate(demand)]
     supply = [[i, sup] for i, sup in enumerate(supply)]
+    solution = []
+    z = 0
 
     def perform_exhaustion_check(supply_idx, demand_idx):  # need this function to be nested to reassign arrays
         nonlocal costs, supply, demand
@@ -51,35 +53,32 @@ def vogel(costs, demand, supply):
             costs = np.delete(costs, demand_idx, 1)
             demand = np.delete(demand, demand_idx, 0)
 
-    solution = []
-    z = 0
+    def perform_allocation(supply_idx, demand_idx):
+        nonlocal costs, supply, demand, solution, z
+        served = min(supply[supply_idx][1], demand[demand_idx][1])
+
+        supply[supply_idx][1] -= served
+        demand[demand_idx][1] -= served
+
+        solution.append((supply[supply_idx][0], demand[demand_idx][0], served))
+        z += served * costs[supply_idx][demand_idx]
+
     while len(costs) != 0:
         _type, idx = determine_max_diff(costs)
         if _type == "D":
             column = costs[:, idx]
             supply_idx = np.argmin(column)
-            served = min(supply[supply_idx][1], demand[idx][1])
 
-            supply[supply_idx][1] -= served
-            demand[idx][1] -= served
-
-            solution.append((supply[supply_idx][0], demand[idx][0], served))
-            z += served * costs[supply_idx][idx]
-
+            perform_allocation(supply_idx, idx)
             perform_exhaustion_check(supply_idx, idx)
 
         else:
             row = costs[idx]
             demand_idx = np.argmin(row)
-            served = min(supply[idx][1], demand[demand_idx][1])
 
-            supply[idx][1] -= served
-            demand[demand_idx][1] -= served
-
-            solution.append((supply[idx][0], demand[demand_idx][0], served))
-            z += served * costs[idx][demand_idx]
-
+            perform_allocation(idx, demand_idx)
             perform_exhaustion_check(idx, demand_idx)
+
     return solution, z
 
 

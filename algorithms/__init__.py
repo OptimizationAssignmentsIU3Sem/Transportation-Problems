@@ -1,6 +1,6 @@
 from .north_west import north_west
 from .vogel import vogel
-from .russel import russel
+from .russell import russell
 
 
 def check_balanced(supply, demand):
