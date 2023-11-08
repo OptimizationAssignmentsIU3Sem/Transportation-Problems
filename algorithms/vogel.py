@@ -30,7 +30,7 @@ def determine_max_diff(costs: np.array):
 
 def vogel(costs, demand, supply):
     """
-    Approximates solution to transportation model, using Vogel's algorithm.
+        Approximates solution to transportation model, using Vogel's algorithm.
     :param costs: a matrix of costs
     :param demand: an array of demands for each destination
     :param supply: n array of number of products that sources are capable of providing

@@ -32,16 +32,19 @@ class SimplexTestCase(unittest.TestCase):
         self.assertEqual(correct_Z, z)
 
     def testCaseNorthWest3(self):
-        _costs = np.array([[7, 8, 1, 2],
-                           [4, 5, 9, 8],
-                           [9, 2, 3, 6]])
-        _demand = np.array([120, 50, 190, 110])
-        _supply = np.array([160, 140, 170])
+        # https://byjus.com/maths/north-west-corner-rule/
+        _costs = np.array([[11, 13, 17, 14],
+                           [16, 18, 14, 10],
+                           [21, 24, 13, 10]])
+        _demand = np.array([200, 225, 275, 250])
+        _supply = np.array([250, 300, 400])
+
         sol, z = north_west(_costs, _demand, _supply)
 
-        expected_X = [(0, 0, 120), (0, 1, 40), (1, 1, 10), (1, 2, 130), (2, 2, 60), (2, 3, 110)]
-        expected_Z = 3220
+        expected_X = [(0, 0, 200), (0, 1, 50), (1, 1, 175), (1, 2, 125), (2, 2, 150), (2, 3, 250)]
+        expected_Z = 12200
 
+        print(sol)
         self.assertTrue(set(expected_X) == set(sol))
         self.assertEqual(expected_Z, z)
 
@@ -58,7 +61,11 @@ class SimplexTestCase(unittest.TestCase):
         self.assertTrue(set(expected_X) == set(x))
         self.assertEqual(expected_Z, z)
 
+    def testCaseVogel2(self):
+        pass
+
     def testCaseVogel3(self):
+        # https://byjus.com/maths/vogels-approximation-method/
         costs = np.array([[3, 2, 7, 6],
                          [7, 5, 2, 3],
                          [2, 5, 4, 5]])
@@ -81,6 +88,20 @@ class SimplexTestCase(unittest.TestCase):
 
         expected_X = [(0, 0, 5), (0, 1, 2), (1, 1, 2), (1, 2, 7), (2, 1, 4), (2, 3, 14)]
         expected_Z = 807
+
+        x, z = russell(costs, demand, supply)
+        self.assertTrue(set(expected_X) == set(x))
+        self.assertEqual(expected_Z, z)
+
+    def testCaseRussell2(self):
+        costs = np.array([[20, 10, 15, 50, 10],
+                          [1,  30, 10, 25, 5],
+                          [5,  10, 15, 20, 2],
+                          [15, 20, 10, 25, 5]])
+        demand = np.array([20, 10, 20, 10, 40])
+        supply = np.array([10, 30, 20, 40])
+        expected_X = [(0, 1, 10), (1, 0, 20), (1, 2, 10), (3, 2, 10), (2, 3, 10), (2, 4, 10), (3, 4, 30)]
+        expected_Z = 690
 
         x, z = russell(costs, demand, supply)
         self.assertTrue(set(expected_X) == set(x))
