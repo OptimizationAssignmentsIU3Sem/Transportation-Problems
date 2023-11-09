@@ -2,8 +2,11 @@
 Implementation of transportation problem algorithms
 
 Already finished:
-North-West, Vogel approximations
+- North-West 
+- Vogel
+- Russell
 
-Test covered:
-North-West, Vogel 
-
+Tests covered:
+ - North-West : 3 tests
+ - Vogel : 3 tests
+ - Russell : 3 tests
