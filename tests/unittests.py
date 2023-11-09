@@ -3,7 +3,7 @@ import numpy as np
 from algorithms import north_west, vogel, russell
 
 
-class SimplexTestCase(unittest.TestCase):
+class TransportationTestCases(unittest.TestCase):
     def testCaseNorthWest1(self):  # test method names begin with 'test'
         _costs = np.array([[2, 3, 4, 2, 4],
                            [8, 4, 1, 4, 1],
