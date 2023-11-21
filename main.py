@@ -4,7 +4,7 @@ from Trans_IO import input_transport, output_transport
 from algorithms import north_west, russell, vogel
 import numpy as np
 
-TEST = False
+TEST = True
 GREEN = '\033[92m'
 RED = '\033[91m'
 
